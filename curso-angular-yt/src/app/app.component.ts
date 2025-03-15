@@ -24,9 +24,7 @@ export class AppComponent implements OnInit {
   agregarTarea() {
     this._tareasService.agregarTarea(this.nuevaTarea);
     this.nuevaTarea = '';
-    this.
-
-    listaTareas = this._tareasService.getTareas();
+    this.listaTareas = this._tareasService.getTareas();
   }
 
   eliminarTarea(index: number) {
