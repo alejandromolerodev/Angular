@@ -5,11 +5,9 @@ import java.util.List;
 public interface IService<T, K> {
     T save(K dto);
 
-    T update(T entity);
+    void deleteById(Long id); // Cambiado a void, porque no necesitamos devolver el objeto al eliminarlo
 
-    T delete(T entity);
-
-    void deleteById(Long id);
+    T update(Long id, K dto);
 
     K findById(Long id);
 

@@ -1,0 +1,24 @@
+<table class="table">
+  <tr *ngFor="let product of products">
+    <!-- Itera sobre cada producto -->
+    <td>{{ product.name }}</td>
+    <!-- Muestra nombre -->
+    <td>{{ product.description }}</td>
+    <!-- Muestra descripción -->
+    <td>{{ product.price | currency }}</td>
+    <!-- Formato de moneda -->
+    <td>
+      <!-- Botón para editar (navega a ruta /edit/id) -->
+      <button routerLink="/edit/{{ product.id }}" class="btn btn-warning">
+        Editar
+      </button>
+
+      <!-- Botón para eliminar (llama a método deleteProduct) -->
+      <button (click)="deleteProduct(product.id!)" class="btn btn-danger">
+        Eliminar
+      </button>
+    </td>
+  </tr>
+</table>
+<!-- Enlace para crear nuevo producto -->
+<a routerLink="/add" class="btn btn-success">Nuevo Producto</a>

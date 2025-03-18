@@ -3,6 +3,7 @@ package com.sgi.backend.service;
 import com.sgi.backend.dto.ProductDTO;
 import com.sgi.backend.entity.Product;
 import com.sgi.backend.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService_Impl implements IService<Product, ProductDTO> {
 
-    // Asumiendo que tienes un repositorio para productos
     @Autowired
     private ProductRepository productRepository;
 
@@ -26,14 +26,16 @@ public class ProductService_Impl implements IService<Product, ProductDTO> {
     }
 
     @Override
-    public Product update(Product entity) {
-        return productRepository.save(entity);
-    }
+    public Product update(Long id, ProductDTO productDTO) {
+        Product product = productRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new EntityNotFoundException("Product not found with id: " + id)
+            );
 
-    @Override
-    public Product delete(Product entity) {
-        productRepository.delete(entity);
-        return entity;
+        // Mapea los campos del DTO a la entidad existente
+        modelMapper.map(productDTO, product);
+        return productRepository.save(product);
     }
 
     @Override
