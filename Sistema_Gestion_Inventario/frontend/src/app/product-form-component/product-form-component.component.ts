@@ -1,16 +1,19 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterModule } from "@angular/router";
 import { Router } from "@angular/router";
 import { Product } from "../models/product";
 import { ProductServiceService } from "../services/product-service.service";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 
 @Component({
-  selector: "app-product-form-component",
-  imports: [],
+  selector: "app-product-form",
+  standalone: true, // <-- ¡Esta línea es crucial!
+  imports: [FormsModule, CommonModule], // Agrega CommonModule
   templateUrl: "./product-form-component.component.html",
-  styleUrl: "./product-form-component.component.css",
+  styleUrls: ["./product-form-component.component.css"],
 })
-export class ProductFormComponentComponent implements OnInit {
+export class ProductFormComponent implements OnInit {
   product: Product = { name: "", description: "", price: 0 }; // Producto temporal
   isEdit = false; // Bandera para saber si es edición
 
@@ -21,6 +24,7 @@ export class ProductFormComponentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("Cargando ProductFormComponent");
     const id = this.route.snapshot.params["id"]; // Obtiene ID de la URL
     if (id) {
       this.isEdit = true;

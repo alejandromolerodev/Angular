@@ -1,23 +1,22 @@
-<form (ngSubmit)="onSubmit()"> <!-- Se ejecuta onSubmit al enviar -->
-  <input
-    type="text"
-    [(ngModel)]="product.name" <!-- Two-way data binding -->
-    name="name"
-    required>
+<h2 style="color: red">{{ isEdit ? "Editar" : "Nuevo" }}</h2>
+<form (ngSubmit)="onSubmit()">
+  <!-- Input corregido -->
+  <input type="text" [(ngModel)]="product.name" name="name" required />
+  <!-- ¡Cierra con "/>" -->
 
-  <textarea
-    [(ngModel)]="product.description"
-    name="description">
-  </textarea>
+  <textarea [(ngModel)]="product.description" name="description"> </textarea>
 
+  <!-- Otro input corregido -->
   <input
     type="number"
     [(ngModel)]="product.price"
     name="price"
     step="0.01"
-    required>
+    required
+  />
+  <!-- ¡Cierra con "/>" -->
 
   <button type="submit">
-    {{ isEdit ? 'Actualizar' : 'Crear' }} <!-- Texto dinámico del botón -->
+    {{ isEdit ? "Actualizar" : "Crear" }}
   </button>
 </form>

@@ -1,11 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { Product } from "../models/product";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 import { ProductServiceService } from "../services/product-service.service";
 
 @Component({
   selector: "app-product-list-component",
+  standalone: true, // <-- Asegúrate de que esta propiedad esté presente
+  imports: [CommonModule, RouterModule],
   templateUrl: "./product-list-component.component.html",
-  styleUrl: "./product-list-component.component.css",
+  styleUrls: ["./product-list-component.component.css"],
 })
 export class ProductListComponentComponent implements OnInit {
   products: Product[] = [];
@@ -18,7 +22,7 @@ export class ProductListComponentComponent implements OnInit {
 
   loadProducts(): void {
     this.productService.getProducts().subscribe((products) => {
-      this.products = products;
+      this.products = products; // Asegúrate de que los datos lleguen aquí
     });
   }
 
