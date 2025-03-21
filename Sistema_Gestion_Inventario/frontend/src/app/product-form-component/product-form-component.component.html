@@ -1,22 +1,129 @@
-<h2 style="color: red">{{ isEdit ? "Editar" : "Nuevo" }}</h2>
-<form (ngSubmit)="onSubmit()">
-  <!-- Input corregido -->
-  <input type="text" [(ngModel)]="product.name" name="name" required />
-  <!-- ¡Cierra con "/>" -->
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <!-- Tarjeta principal del formulario -->
+      <div class="card shadow">
+        <!-- Encabezado del formulario con título dinámico -->
+        <div class="card-header bg-primary bg-gradient text-white">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-pencil-square me-2 fs-4"></i>
+            <h4 class="mb-0">
+              {{ product.id ? "Editar Producto" : "Nuevo Producto" }}
+            </h4>
+          </div>
+        </div>
 
-  <textarea [(ngModel)]="product.description" name="description"> </textarea>
+        <!-- Cuerpo del formulario -->
+        <div class="card-body p-4">
+          <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+            <!-- Campo Nombre -->
+            <div class="mb-3">
+              <label for="productName" class="form-label"
+                >Nombre del Producto*</label
+              >
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-tag"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="productName"
+                  name="name"
+                  [(ngModel)]="product.name"
+                  placeholder="Ej: Smartphone Galaxy S23"
+                  required
+                  #name="ngModel"
+                />
+              </div>
+              <div
+                *ngIf="name.invalid && (name.dirty || name.touched)"
+                class="text-danger mt-1"
+              >
+                <small *ngIf="name.errors?.['required']"
+                  >El nombre del producto es obligatorio</small
+                >
+              </div>
+            </div>
 
-  <!-- Otro input corregido -->
-  <input
-    type="number"
-    [(ngModel)]="product.price"
-    name="price"
-    step="0.01"
-    required
-  />
-  <!-- ¡Cierra con "/>" -->
+            <!-- Campo Descripción -->
+            <div class="mb-3">
+              <label for="productDescription" class="form-label"
+                >Descripción</label
+              >
+              <textarea
+                class="form-control"
+                id="productDescription"
+                name="description"
+                [(ngModel)]="product.description"
+                placeholder="Descripción detallada del producto"
+                rows="4"
+              >
+              </textarea>
+            </div>
 
-  <button type="submit">
-    {{ isEdit ? "Actualizar" : "Crear" }}
-  </button>
-</form>
+            <!-- Campo Precio -->
+            <div class="mb-3">
+              <label for="productPrice" class="form-label">Precio*</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-currency-dollar"></i>
+                </span>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="productPrice"
+                  name="price"
+                  [(ngModel)]="product.price"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  required
+                  #price="ngModel"
+                />
+              </div>
+              <div
+                *ngIf="price.invalid && (price.dirty || price.touched)"
+                class="text-danger mt-1"
+              >
+                <small *ngIf="price.errors?.['required']"
+                  >El precio es obligatorio</small
+                >
+                <small *ngIf="price.errors?.['min']"
+                  >El precio no puede ser negativo</small
+                >
+              </div>
+            </div>
+
+            <div class="border-top pt-3">
+              <div class="d-flex gap-2 justify-content-end">
+                <!-- Botón Cancelar -->
+                <a routerLink="/" class="btn btn-outline-secondary">
+                  <i class="bi bi-x-circle me-1"></i>Cancelar
+                </a>
+
+                <!-- Botón Guardar -->
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="productForm.invalid"
+                >
+                  <i class="bi bi-check2-circle me-1"></i>
+                  {{ product.id ? "Guardar Cambios" : "Crear Producto" }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Pie de la tarjeta con información adicional -->
+        <div class="card-footer bg-light">
+          <small class="text-muted d-flex align-items-center">
+            <i class="bi bi-info-circle me-2"></i>
+            Los campos marcados con * son obligatorios
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
